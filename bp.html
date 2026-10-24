@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Battle Pass</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101012;color:#d6d6da;font:13px Verdana,Tahoma,Arial,sans-serif;overflow-x:hidden}
+#top{display:flex;justify-content:space-between;align-items:center;padding:14px 26px;background:#141417;border-bottom:1px solid #26262b;font-size:11px;letter-spacing:3px;font-weight:bold;color:#e8e8ea}
+#top i{color:#e5383b;font-style:normal;margin:0 10px}
+#top span.ss{letter-spacing:2px;font-weight:normal;color:#b9b9c0}
+#hero{display:flex;justify-content:space-between;align-items:center;padding:20px 26px 22px;background:linear-gradient(90deg,#221418,#1b1316 60%,#171214);border-bottom:1px solid #2e1d22}
+#hero small{display:block;font-size:10px;letter-spacing:2px;color:#a39a9d;margin-bottom:4px}
+#hero h1{margin:0;font:900 44px "Arial Black",Impact,Arial;letter-spacing:-1px;color:#f2f2f4}
+#hero h1 b{color:#e5383b}
+.tabs a{display:inline-block;margin-left:8px;padding:10px 18px;font-size:11px;font-weight:bold;color:#d8d8dc;background:#1d1a1d;border:1px solid #3a3035;cursor:pointer;text-decoration:none}
+.tabs a.on{background:#e5383b;border-color:#e5383b;color:#fff}
+#main{display:flex}
+#side{width:200px;flex:none;padding:20px;border-right:1px solid #26262b;text-align:center}
+#side h4,.sec h4{margin:0;font-size:11px;letter-spacing:1.5px;color:#e8e8ea;text-align:left}
+#side .nm{font-size:16px;font-weight:bold;color:#fff;text-align:left;margin:4px 0 18px;word-break:break-all}
+#ring{width:112px;height:112px;margin:0 auto;border:7px solid #e5383b;border-radius:50%;display:flex;flex-direction:column;justify-content:center;background:#1a1416;box-shadow:0 0 18px rgba(229,56,59,.25)}
+#ring b{font:bold 34px Arial;color:#fff;line-height:1}
+#ring span{font-size:9px;letter-spacing:2px;color:#9a9aa2;margin-top:6px}
+#xpv{margin-top:16px;font:bold 17px Arial;color:#fff}
+.lab{font-size:8px;letter-spacing:1px;color:#8d8d95;margin-top:4px}
+.bar{height:6px;background:#2c2b30;margin:14px 0 6px;border-radius:1px;overflow:hidden}
+.bar div{height:100%;background:#e5383b}
+#act{font-size:10px;color:#c8c8cc;margin:12px 0 16px}
+#act:before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#3ddc84;margin-right:8px;vertical-align:middle}
+hr{border:0;border-top:1px solid #2a2a2f;margin:0 0 16px}
+#nxt{font:bold 16px Arial;color:#fff;text-align:left;margin:8px 0 6px}
+#nxtl{font-size:10px;color:#9a9aa2;text-align:left}
+#rdy{margin-top:18px;padding:10px;background:#2a1418;border:1px solid #e5383b;font-size:11px;color:#fff;display:none}
+#rdy b{font-size:20px;color:#ff5a5d;display:block}
+#cont{flex:1;padding:22px 20px 20px;min-width:0}
+.sec{display:flex;justify-content:space-between;width:58%;margin-bottom:16px}
+#cards{display:flex;gap:6px}
+.c{flex:1;min-width:0;background:#1d1d21;border:1px solid #2e2e34;text-align:center}
+.c .h{background:#28272d;padding:10px 4px;font-size:10px;letter-spacing:1px;color:#c9c9cf}
+.c .h b{font-size:14px;color:#fff;letter-spacing:0}
+.c .st{font-size:10px;font-weight:bold;color:#e3e3e7;margin:14px 0 6px;height:12px}
+.c .ic{height:96px;display:flex;align-items:center;justify-content:center}
+.c .ic svg{width:72px;height:72px;filter:drop-shadow(0 4px 6px rgba(0,0,0,.6))}
+.c .rw{font:bold 15px Arial;color:#fff;min-height:40px;padding:0 6px;display:flex;align-items:center;justify-content:center}
+.c .od{font-size:9.5px;font-weight:bold;color:#d8d8dc;margin:8px 0 14px}
+.c .bt{margin:0 10px 12px;padding:11px 4px;background:#34323a;font-size:9.5px;font-weight:bold;color:#ececf0}
+.c.cur{border-color:#e5383b;background:#241a1d}
+.c.cur .h{background:#e5383b;color:#fff}
+.c.cur .st{color:#ff6b6e}
+.c.cur .bt{background:#c42a2e;border-bottom:3px solid #8e1b1f}
+.c.rd{border-color:#e5383b}
+.c.rd .h{background:#7d1c20;color:#fff}
+.c.rd .st{color:#ff6b6e}
+.c.rd .bt{background:#e5383b;animation:p 1.4s infinite}
+.c.dn{opacity:.55}
+.c.dn .st,.c.dn .bt{color:#5fdc8a}
+@keyframes p{50%{background:#a8262a}}
+#pg{display:flex;justify-content:center;align-items:center;gap:6px;margin:20px 0 6px}
+#pg a{width:42px;height:34px;line-height:32px;background:#2a1a1e;color:#e5383b;font-size:20px;text-align:center;cursor:pointer;border:1px solid #3a2a2e}
+#pg span{padding:6px 6px 8px;font-size:11px;color:#aaa;cursor:pointer}
+#pg span.on{color:#ff5a5d;border-bottom:2px solid #e5383b}
+#tasks{display:flex;gap:16px;margin-top:22px}
+#tasks>div{flex:1}
+#tasks h4{font-size:11px;letter-spacing:1.5px;color:#e8e8ea;padding-bottom:10px;border-bottom:1px solid #2a2a2f;margin:0 0 12px}
+.t{background:#1e1c20;border-left:3px solid #6a1e22;padding:14px 16px 12px;margin-bottom:8px}
+.t p{margin:0 0 8px;color:#e8e8ea;font-size:12px}
+.t .r{display:flex;justify-content:space-between;font-size:10px;color:#8d8d95;margin-bottom:6px}
+.t .r b{color:#ff5a5d}
+.t .bar{margin:0;height:4px}
+.t.ok{border-left-color:#3ddc84}
+.t.ok .bar div{background:#3ddc84}
+.t.ok .r b{color:#3ddc84}
+.tm{font-size:10px;color:#8d8d95;margin:-4px 0 12px}
+#all{display:none;flex-wrap:wrap;gap:6px}
+#all .c{flex:none;width:calc(12.5% - 6px)}
+#all .c .ic{height:60px}
+#all .c .ic svg{width:46px;height:46px}
+#all .c .rw{font-size:11px;min-height:30px}
+#all .c .st{margin:8px 0 2px}
+.hint{font-size:10px;color:#8d8d95;margin-top:10px;text-align:center}
+.hint b{color:#ff5a5d}
+</style>
+</head>
+<body>
+<div id="top"><span>ZOMBIE <i>/</i> BASEBUILDER</span><span class="ss" id="season">Zombie Sezona</span></div>
+<div id="hero">
+  <div><small>HRAJ. PLN ULOHY. ZISKAJ ODMENY.</small><h1>BATTLE<b>PASS</b></h1></div>
+  <div class="tabs"><a id="t0" class="on" onclick="tab(0)">Battlepass</a><a id="t1" onclick="tab(1)">Ulohy</a><a id="t2" onclick="tab(2)">Vsetky odmeny</a></div>
+</div>
+<div id="main">
+  <div id="side">
+    <h4>TVOJ PROFIL</h4>
+    <div class="nm" id="name">-</div>
+    <div id="ring"><b id="lvl">0</b><span id="lvlmax">LEVEL / 48</span></div>
+    <div id="xpv">0 / 5 000</div>
+    <div class="lab">XP DO DALSIEHO LEVELU</div>
+    <div class="bar"><div id="xpb" style="width:0"></div></div>
+    <div id="act">SEZONA AKTIVNA</div>
+    <hr>
+    <h4>DALSIA ODMENA</h4>
+    <div id="nxt">-</div>
+    <div id="nxtl"></div>
+    <div id="rdy"><b id="rdyn">0</b>odmien caka na vyzdvihnutie<br>napis <b style="display:inline;font-size:11px">/bp</b> a stlac <b style="display:inline;font-size:11px">2</b></div>
+  </div>
+  <div id="cont">
+    <div id="v0">
+      <div class="sec"><h4>SEZONNE ODMENY</h4><h4 id="rng">LEVEL 1 &ndash; 5</h4></div>
+      <div id="cards"></div>
+      <div id="pg"></div>
+    </div>
+    <div id="tasks">
+      <div><h4>DENNE ULOHY</h4><div class="tm">Nove ulohy kazdy den o polnoci</div><div id="dl"></div></div>
+      <div><h4>TYZDENNE ULOHY</h4><div class="tm">Nove ulohy kazdy pondelok</div><div id="wl"></div></div>
+    </div>
+    <div id="all"></div>
+    <div class="hint">Odmeny vyzdvihnes v hre: napis <b>/bp</b> a stlac <b>2</b>. Stranky prepinas sipkami alebo koleckom mysi.</div>
+  </div>
+</div>
+<script>
+// ---------- ikony (SVG) ----------
+var G='<defs><linearGradient id="gd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe27a"/><stop offset="1" stop-color="#c8871a"/></linearGradient><linearGradient id="gn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fe36b"/><stop offset="1" stop-color="#2f8a2c"/></linearGradient><linearGradient id="bl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4aa3ff"/><stop offset="1" stop-color="#1a4fa8"/></linearGradient><linearGradient id="rd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff6a4d"/><stop offset="1" stop-color="#a3161b"/></linearGradient><linearGradient id="pu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c58bff"/><stop offset="1" stop-color="#5a2a9e"/></linearGradient><radialGradient id="gl"><stop offset="0" stop-color="#ff3b3b" stop-opacity=".7"/><stop offset="1" stop-color="#ff3b3b" stop-opacity="0"/></radialGradient></defs>';
+document.write('<svg width="0" height="0" style="position:absolute">'+G+'</svg>');
+function S(b){return '<svg viewBox="0 0 64 64">'+b+'</svg>'}
+var COIN=function(x,y){return '<ellipse cx="'+x+'" cy="'+(y+3)+'" rx="9" ry="4" fill="#9a6410"/><rect x="'+(x-9)+'" y="'+y+'" width="18" height="3" fill="#b8791a"/><ellipse cx="'+x+'" cy="'+y+'" rx="9" ry="4" fill="url(#gd)" stroke="#8a5a10" stroke-width=".8"/>'};
+var ICO={
+0:S('<g transform="rotate(-18 30 30)"><rect x="8" y="22" width="40" height="20" rx="2" fill="#1f6b2a"/><rect x="8" y="18" width="40" height="20" rx="2" fill="url(#gn)" stroke="#155a1f"/><circle cx="28" cy="28" r="6" fill="#2f8a2c" stroke="#c9f5b0"/><text x="28" y="32" font-size="9" font-weight="bold" text-anchor="middle" fill="#e9ffd9">$</text></g>'+COIN(46,48)+COIN(46,43)+COIN(36,52)+COIN(46,38)),
+1:S('<path d="M32 4 56 14v18c0 14-10 22-24 28C18 54 8 46 8 32V14z" fill="url(#bl)" stroke="#e8b33a" stroke-width="3"/><path d="M18 40l14 10 14-10v8L32 58 18 48z" fill="#e8b33a"/><text x="32" y="36" font-size="20" font-weight="900" font-family="Arial Black,Arial" text-anchor="middle" fill="url(#gd)" stroke="#6a3d06" stroke-width="1">XP</text>'),
+2:S('<circle cx="32" cy="34" r="24" fill="url(#gd)" stroke="#8a5a10" stroke-width="2.5"/><circle cx="32" cy="34" r="18" fill="none" stroke="#a96d12" stroke-width="1.5"/><g fill="#3fb64a" stroke="#1e6b25" stroke-width="1"><circle cx="27" cy="29" r="6"/><circle cx="37" cy="29" r="6"/><circle cx="27" cy="39" r="6"/><circle cx="37" cy="39" r="6"/></g><path d="M32 34 36 50" stroke="#1e6b25" stroke-width="2.5"/><text x="32" y="38" font-size="9" font-weight="bold" text-anchor="middle" fill="#fff">LP</text>'),
+3:S('<path d="M32 56C14 42 6 32 8 22 10 12 24 8 32 18 40 8 54 12 56 22 58 32 50 42 32 56z" fill="url(#gn)" stroke="#1c4d1a" stroke-width="2.5"/><path d="M20 20c2-4 6-5 9-3" stroke="#c9f5b0" stroke-width="2" fill="none" stroke-linecap="round"/><rect x="28" y="22" width="8" height="22" rx="1" fill="#e9ffe0"/><rect x="21" y="29" width="22" height="8" rx="1" fill="#e9ffe0"/><path d="M14 18 10 12M50 18l4-6M32 18v-6" stroke="#2c5a28" stroke-width="3"/>'),
+4:S('<g fill="url(#gd)" stroke="#6a3d06"><path d="M14 58V30c0-6 3-12 5-14 2 2 5 8 5 14v28z"/><path d="M26 58V26c0-6 3-12 5-14 2 2 5 8 5 14v32z"/></g><path d="M14 52h10M26 52h10" stroke="#8a5a10" stroke-width="3"/><path d="M38 50C46 42 48 30 46 18l-6 4 10-16 8 18-6-3c2 14-2 26-14 34z" fill="url(#rd)" stroke="#5a0a0d" stroke-width="1.5"/>'),
+5:S('<path d="M32 10l5 1 2 6 5 2 5-3 4 4-3 5 2 5 6 2v6l-6 2-2 5 3 5-4 4-5-3-5 2-2 6h-6l-2-6-5-2-5 3-4-4 3-5-2-5-6-2v-6l6-2 2-5-3-5 4-4 5 3 5-2 2-6z" fill="#6d6a66" stroke="#2e2c2a" stroke-width="2"/><circle cx="32" cy="34" r="11" fill="#3a3836"/><text x="32" y="39" font-size="15" font-weight="bold" text-anchor="middle" fill="url(#gd)">?</text><path d="M30 2 18 18h8v14h8V18h8z" fill="url(#gn)" stroke="#1c4d1a" stroke-width="1.5"/>'),
+6:S('<circle cx="32" cy="32" r="28" fill="url(#gl)"/><rect x="18" y="8" width="28" height="50" rx="4" fill="#7a4a24" stroke="#3a210d" stroke-width="2"/><path d="M14 14h36l-4 6H18z" fill="#c8871a" stroke="#3a210d"/><circle cx="25" cy="27" r="4" fill="#ffcf4a"/><circle cx="39" cy="27" r="4" fill="#ffcf4a"/><circle cx="25" cy="27" r="1.6" fill="#000"/><circle cx="39" cy="27" r="1.6" fill="#000"/><path d="M24 40h16v6H24z" fill="#3a210d"/><path d="M26 40v6M30 40v6M34 40v6M38 40v6" stroke="#f2e0c0" stroke-width="1.5"/><path d="M18 50h28" stroke="#3a210d" stroke-width="2"/>'),
+7:S('<path d="M32 4 56 12v20c0 14-10 22-24 28C18 54 8 46 8 32V12z" fill="url(#bl)" stroke="#0d2d66" stroke-width="2.5"/><path d="M32 10 50 16v16c0 10-8 17-18 22z" fill="#7cc0ff" opacity=".35"/><path d="M22 30l8 8 14-14" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'),
+8:S('<path d="M38 2 12 36h16l-6 26 30-36H36z" fill="url(#gn)" stroke="#1c4d1a" stroke-width="2.5" stroke-linejoin="round"/><path d="M6 20h10M4 30h8M8 40h6" stroke="#7fd25e" stroke-width="3" stroke-linecap="round"/>'),
+9:S('<g stroke="#5a0a0d" stroke-width="1.5" fill="url(#rd)"><path d="M10 8c10 14 16 30 14 50l-5-2C20 38 16 22 10 8z"/><path d="M24 6c10 16 14 32 12 52l-5-1C32 38 30 22 24 6z"/><path d="M38 8c10 14 14 30 12 48l-5-1C46 38 44 22 38 8z"/></g><circle cx="52" cy="14" r="4" fill="#ff3b3b"/><circle cx="56" cy="24" r="2.5" fill="#ff3b3b"/>'),
+10:S(COIN(28,46)+COIN(28,40)+COIN(28,34)+COIN(28,28)+'<path d="M48 6 36 22h8v26h8V22h8z" fill="url(#gn)" stroke="#1c4d1a" stroke-width="1.5"/>'),
+11:S('<path d="M26 6 46 14v16c0 12-8 19-20 24C14 49 6 42 6 30V14z" fill="url(#pu)" stroke="#e8b33a" stroke-width="2.5"/><text x="26" y="35" font-size="16" font-weight="900" font-family="Arial Black,Arial" text-anchor="middle" fill="url(#gd)" stroke="#3a1a5e" stroke-width=".8">XP</text><path d="M50 26 40 40h6v20h8V40h6z" fill="url(#gn)" stroke="#1c4d1a" stroke-width="1.5"/>'),
+12:S('<circle cx="32" cy="32" r="30" fill="url(#gl)"/><path d="M32 4 50 22 32 60 14 22z" fill="url(#rd)" stroke="#5a0a0d" stroke-width="2"/><path d="M14 22h36M32 4 26 22l6 38 6-38z" stroke="#ffb1a6" stroke-width="1.2" fill="none" opacity=".8"/><path d="M22 14 32 4l10 10" stroke="#ffd0c8" stroke-width="2" fill="none"/>')
+};
+function rtxt(t,a){
+  a=+a;var k=function(v){return v>=1000?(v%1000?(v/1000).toFixed(1):v/1000)+'K':v};
+  switch(+t){case 0:return '+'+k(a)+' Body';case 1:return '+'+a+' XP';case 2:return '+'+a+' LP';case 3:return '+'+a+' ZM HP';
+  case 4:return '+'+a+'% Damage';case 5:return '+'+a+(a>1?' nahodne upgrady':' nahodny upgrade');case 6:return 'Nahodny totem';
+  case 7:return '+'+a+' lvl CT Brnenie';case 8:return '+'+a+' lvl ZM Rychlost';case 9:return '+'+a+' lvl ZM Poskodenie';
+  case 10:return '+'+a+' lvl Zisk bodov';case 11:return '+'+a+' lvl Zisk XP';case 12:return 'LEGENDARNY ITEM'}return '?'}
+function fmt(n){return String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ')}
+
+// ---------- data z hry (URL parametre) ----------
+var Q={};location.search.substr(1).split('&').forEach(function(p){var i=p.indexOf('=');if(i>0)Q[p.substr(0,i)]=decodeURIComponent(p.substr(i+1).replace(/\+/g,' '))});
+function U(s){return (s||'').replace(/_/g,' ')}
+var NEED=+(Q.q||5000),MAX,L=+(Q.l||0),X=+(Q.x||0),C=+(Q.c||0);
+var R=(Q.r||'0.2000-1.150-2.10-3.60-0.3000-1.400-7.2-2.15-0.5000-1.650-2.20-5.1-3.60-1.900-10.1-4.5-2.20-0.10000-6.1-8.2-3.60-2.30-11.1-0.12500-3.120-5.1-9.2-4.5-2.30-0.15000-2.40-0.8000-3.120-2.40-0.20000-5.1-1.1500-2.50-0.25000-2.100-4.5-6.1-0.30000-1.1150-2.60-5.3-5.1-12.1').split('-').map(function(s){return s.split('.')});
+MAX=R.length;
+function T(s){return (s||'').split('|').filter(function(x){return x}).map(function(x){return x.split('~')})}
+var D=T(Q.d||'Zabi_100_zombie~60~100~1000~0|Daj_30_headshotov~30~30~900~1|Odohraj_20_kol~4~20~700~0|Zamkni_20_blokov~0~20~600~0');
+var W=T(Q.w||'Ziskaj_75_killov_s_SG552~1~75~5000~0|Zabi_500_zombie~60~500~5000~0|Sposob_30000_poskodenia_ako_zombie~0~30000~4500~0');
+var page=Math.floor(Math.min(C,MAX-1)/5),pages=Math.ceil(MAX/5);
+
+// profil
+document.getElementById('name').textContent=U(Q.n||'Hrac');
+document.getElementById('season').textContent=U(Q.s||'Zombie Sezona');
+document.getElementById('lvl').textContent=L;
+document.getElementById('lvlmax').textContent='LEVEL / '+MAX;
+if(L>=MAX){document.getElementById('xpv').textContent='MAX';document.getElementById('xpb').style.width='100%'}
+else{document.getElementById('xpv').textContent=fmt(X)+' / '+fmt(NEED);document.getElementById('xpb').style.width=Math.floor(X*100/NEED)+'%'}
+if(L<MAX){document.getElementById('nxt').textContent=rtxt(R[L][0],R[L][1]);document.getElementById('nxtl').textContent='Zostava '+fmt(NEED-X)+' XP do levelu '+(L+1)+'.'}
+else{document.getElementById('nxt').textContent='Vsetko ziskane';}
+if(L>C){document.getElementById('rdy').style.display='block';document.getElementById('rdyn').textContent=L-C}
+
+// ---------- karty ----------
+function card(i,small){
+  var t=R[i][0],a=R[i][1],cl='',st='ZAMKNUTE',bt='CAKA NA ODOMKNUTIE';
+  if(i<C){cl=' dn';st='VYZDVIHNUTE';bt='&#10004; VYZDVIHNUTE'}
+  else if(i<L){cl=' rd';st='PRIPRAVENE';bt='VYZDVIHNI: /bp &rarr; 2'}
+  else if(i==L){cl=' cur';st='PRAVE PLNIS';bt=Math.floor(X*100/NEED)+' % DOKONCENE'}
+  return '<div class="c'+cl+'"><div class="h">LEVEL <b>'+(i+1)+'</b></div><div class="st">'+st+'</div><div class="ic">'+ICO[t]+'</div><div class="rw">'+rtxt(t,a)+'</div>'+(small?'':'<div class="od">ODMENA ZA LEVEL '+(i+1)+'</div><div class="bt">'+bt+'</div>')+'</div>'}
+function draw(){
+  var h='',a=page*5,b=Math.min(a+5,MAX);
+  for(var i=a;i<b;i++)h+=card(i);
+  document.getElementById('cards').innerHTML=h;
+  document.getElementById('rng').innerHTML='LEVEL '+(a+1)+' &ndash; '+b;
+  var p='<a onclick="go(page-1)">&larr;</a>';
+  for(var j=0;j<pages;j++)p+='<span class="'+(j==page?'on':'')+'" onclick="go('+j+')">'+(j+1)+'</span>';
+  document.getElementById('pg').innerHTML=p+'<a onclick="go(page+1)">&rarr;</a>';
+}
+function go(p){page=(p+pages)%pages;draw()}
+var lock=0;
+document.getElementById('cards').onwheel=document.getElementById('cards').onmousewheel=function(e){e=e||window.event;var d=e.deltaY||-e.wheelDelta;var n=+new Date;if(n-lock>250){lock=n;go(page+(d>0?1:-1))}if(e.preventDefault)e.preventDefault();return false};
+
+// ---------- ulohy ----------
+function tasks(el,arr){
+  var h='';arr.forEach(function(t){var ok=t[4]=='1',p=Math.min(+t[1],+t[2]);
+  h+='<div class="t'+(ok?' ok':'')+'"><p>'+U(t[0])+'</p><div class="r"><span>'+fmt(p)+' / '+fmt(t[2])+'</span><b>'+(ok?'&#10004; SPLNENE ':'')+'+'+fmt(t[3])+' XP</b></div><div class="bar"><div style="width:'+Math.floor(p*100/t[2])+'%"></div></div></div>'});
+  document.getElementById(el).innerHTML=h}
+tasks('dl',D);tasks('wl',W);
+
+// ---------- vsetky odmeny ----------
+var h='';for(var i=0;i<MAX;i++)h+=card(i,1);document.getElementById('all').innerHTML=h;
+
+function tab(n){
+  for(var i=0;i<3;i++)document.getElementById('t'+i).className=i==n?'on':'';
+  document.getElementById('v0').style.display=n==0?'block':'none';
+  document.getElementById('tasks').style.display=n==2?'none':'flex';
+  document.getElementById('all').style.display=n==2?'flex':'none';
+}
+draw();
+</script>
+</body>
+</html>
